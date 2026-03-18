@@ -1,30 +1,46 @@
 #include <iostream>
 using namespace std;
 
-class MissingNumber {
+class MajorityElement {
     int a[1000];
     int n;
 
 public:
     void input() {
         cin >> n;
-        for (int i = 0; i < n - 1; i++)
+        for (int i = 0; i < n; i++)
             cin >> a[i];
     }
 
     void solve() {
-        int sum = n * (n + 1) / 2;
-        int curr = 0;
+        int candidate = a[0], count = 1;
 
-        for (int i = 0; i < n - 1; i++)
-            curr += a[i];
+        for (int i = 1; i < n; i++) {
+            if (a[i] == candidate)
+                count++;
+            else
+                count--;
 
-        cout << sum - curr;
+            if (count == 0) {
+                candidate = a[i];
+                count = 1;
+            }
+        }
+
+        count = 0;
+        for (int i = 0; i < n; i++)
+            if (a[i] == candidate)
+                count++;
+
+        if (count > n / 2)
+            cout << candidate;
+        else
+            cout << -1;
     }
 };
 
 int main() {
-    MissingNumber m;
+    MajorityElement m;
     m.input();
     m.solve();
     return 0;
